@@ -3,6 +3,7 @@ package chess.pieces;
 import boardgame.Board;
 import chess.ChessPiece;
 import chess.Color;
+import chess.SharedMovements;
 
 public class Bishop extends ChessPiece {
     public Bishop(Board board, Color color) {
@@ -17,6 +18,7 @@ public class Bishop extends ChessPiece {
     @Override
     public boolean[][] possibleMoves() {
         boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
-        return mat;
+
+        return SharedMovements.diagonalLine(position, this, mat);
     }
 }

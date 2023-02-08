@@ -3,7 +3,7 @@ package boardgame;
 public abstract class Piece {
     protected Position position;
 
-    protected Board getBoard() {
+    public Board getBoard() {
         return board;
     }
 

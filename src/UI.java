@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class UI {
 
@@ -76,7 +75,8 @@ public class UI {
 
         printCapturedPieces(captured);
         System.out.printf("Turn: %s\n", chessMatch.getTurn());
-        if (chessMatch.getCheckmate()) {
+
+        if (!chessMatch.getCheckmate()) {
             System.out.printf("Waiting player: %s\n", chessMatch.getCurrentPlayer());
 
             if (chessMatch.getCheck()) {

@@ -1,6 +1,9 @@
 package boardgame;
 
 public class Position {
+    private int column;
+    private int row;
+
 
     public int getRow() {
         return row;
@@ -10,7 +13,6 @@ public class Position {
         this.row = row;
     }
 
-    private int row;
 
     public int getColumn() {
         return column;
@@ -20,7 +22,10 @@ public class Position {
         this.column = column;
     }
 
-    private int column;
+    public void setValues(int row, int column) {
+        this.row = row;
+        this.column = column;
+    }
 
     @Override
     public String toString() {

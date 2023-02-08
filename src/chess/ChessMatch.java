@@ -16,6 +16,11 @@ public class ChessMatch {
     private Board board;
     private List<Piece> piecesOnTheBoard = new ArrayList<>();
     private List<Piece> capturedPieces = new ArrayList<>();
+    private boolean checkmate;
+
+    public boolean getCheckmate() {
+        return checkmate;
+    }
 
     public boolean getCheck() {
         return check;
@@ -55,6 +60,30 @@ public class ChessMatch {
         return color == Color.WHITE ? Color.BLACK : Color.WHITE;
     }
 
+    public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {
+        Position source = sourcePosition.toPosition();
+        Position target = targetPosition.toPosition();
+
+        validateSourcePosition(source);
+        validateTargetPosition(source, target);
+        Piece capturedPiece = makeMove(source, target);
+
+        if (testCheck(currentPlayer)) {
+            undoMove(source, target, capturedPiece);
+            throw new ChessException("You cannot put yourself in check");
+        }
+
+        check = testCheck(oponnent(currentPlayer));
+
+        if (testCheckmate(oponnent(currentPlayer))) {
+            checkmate = true;
+        } else {
+            nextTurn();
+
+        }
+        return (ChessPiece) capturedPiece;
+    }
+
     private List<Piece> piecesOf(Color color) {
         return piecesOnTheBoard.stream().filter(x -> ((ChessPiece) x).getColor() == color).toList();
     }
@@ -82,29 +111,41 @@ public class ChessMatch {
         return false;
     }
 
+    private boolean testCheckmate(Color color) {
+        if (!testCheck(color)) {
+            return false;
+        }
+
+        List<Piece> pieces = piecesOf(color);
+
+        for (Piece piece : pieces) {
+            boolean[][] mat = piece.possibleMoves();
+            for (int i = 0; i < board.getColumns(); i++) {
+                for (int j = 0; j < board.getColumns(); j++) {
+                    if (mat[i][j]) {
+                        Position source = ((ChessPiece) piece).getChessPosition().toPosition();
+                        Position target = new Position(i, j);
+
+                        Piece capturedPiece = makeMove(source, target);
+
+                        boolean testCheck = testCheck(color);
+                        undoMove(source, target, capturedPiece);
+
+                        if (!testCheck) {
+                            return false;
+                        }
+                    }
+                }
+
+            }
+        }
+        return true;
+    }
+
     public boolean[][] possibleMoves(ChessPosition sourcePosition) {
         Position position = sourcePosition.toPosition();
         validateSourcePosition(position);
         return board.piece(position).possibleMoves();
-    }
-
-    public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {
-        Position source = sourcePosition.toPosition();
-        Position target = targetPosition.toPosition();
-
-        validateSourcePosition(source);
-        validateTargetPosition(source, target);
-        Piece capturedPiece = makeMove(source, target);
-
-        if (testCheck(currentPlayer)) {
-            undoMove(source, target, capturedPiece);
-            throw new ChessException("You cannot put yourself in check");
-        }
-
-        check = testCheck(oponnent(currentPlayer));
-
-        nextTurn();
-        return (ChessPiece) capturedPiece;
     }
 
     private void validateTargetPosition(Position source, Position target) {

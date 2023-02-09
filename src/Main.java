@@ -1,9 +1,7 @@
 import boardgame.Position;
-import chess.ChessException;
-import chess.ChessMatch;
-import chess.ChessPiece;
-import chess.ChessPosition;
+import chess.*;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -34,6 +32,23 @@ public class Main {
 
                 if (capturedPiece != null) {
                     captured.add(capturedPiece);
+                }
+
+                if (chessMatch.getPromoted() != null) {
+                    System.out.println("Enter piece for promotion (B/N/R/Q): ");
+
+                    String type = sc.nextLine().toUpperCase();
+
+                    while (
+                            !type.equals(PieceTypes.BISHOP.toString())
+                                    && !type.equals(PieceTypes.KNIGHT.toString())
+                                    && !type.equals(PieceTypes.ROOK.toString())
+                                    && !type.equals(PieceTypes.QUEEN.toString())
+                    ) {
+                        System.out.println("Enter piece for promotion (B/N/R/Q): ");
+                        type = sc.nextLine().toUpperCase();
+                    }
+                    chessMatch.replacePromotedPiece(type);
                 }
 
             } catch (ChessException | InputMismatchException e) {

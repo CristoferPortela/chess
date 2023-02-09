@@ -3,6 +3,7 @@ package chess.pieces;
 import boardgame.Board;
 import chess.ChessPiece;
 import chess.Color;
+import chess.PieceTypes;
 import chess.SharedMovements;
 
 public class Queen extends ChessPiece {
@@ -12,7 +13,7 @@ public class Queen extends ChessPiece {
 
     @Override
     public String toString() {
-        return "Q";
+        return PieceTypes.QUEEN.toString();
     }
 
     @Override

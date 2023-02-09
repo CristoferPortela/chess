@@ -4,6 +4,7 @@ import boardgame.Board;
 import boardgame.Position;
 import chess.ChessPiece;
 import chess.Color;
+import chess.PieceTypes;
 
 public class Knight extends ChessPiece {
     public Knight(Board board, Color color) {
@@ -19,7 +20,7 @@ public class Knight extends ChessPiece {
 
     @Override
     public String toString() {
-        return "N";
+        return PieceTypes.KNIGHT.toString();
     }
 
     @Override

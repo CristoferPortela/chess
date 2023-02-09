@@ -3,6 +3,7 @@ package chess.pieces;
 import boardgame.Board;
 import chess.ChessPiece;
 import chess.Color;
+import chess.PieceTypes;
 import chess.SharedMovements;
 
 public class Bishop extends ChessPiece {
@@ -12,7 +13,7 @@ public class Bishop extends ChessPiece {
 
     @Override
     public String toString() {
-        return "B";
+        return PieceTypes.BISHOP.toString();
     }
 
     @Override

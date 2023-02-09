@@ -5,6 +5,7 @@ import boardgame.Position;
 import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.Color;
+import chess.PieceTypes;
 
 public class King extends ChessPiece {
     public King(Board board, Color color, ChessMatch chessMatch) {
@@ -24,7 +25,7 @@ public class King extends ChessPiece {
 
     @Override
     public String toString() {
-        return "K";
+        return PieceTypes.KING.toString();
     }
 
     @Override
